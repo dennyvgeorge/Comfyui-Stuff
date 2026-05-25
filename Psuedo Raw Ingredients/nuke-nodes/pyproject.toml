@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nuke-nodes"
+description = "ComfyUI custom nodes that replicate Nuke compositing functionality"
+version = "1.0.0"
+license = {file = "LICENSE"}
+requires-python = ">=3.9"
+dynamic = ["dependencies"]
+classifiers = [
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Repository = "https://github.com/sumitchatterjee13/nuke-nodes-comfyui"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.910"
+]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+exclude = ["tests*", "docs*", "examples*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.txt", "*.json", "*.yaml", "*.yml"]
+
+[tool.comfy]
+PublisherId = "sumit"
+DisplayName = "Nuke Nodes"
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+# Note: Due to relative imports in the package, run tests from the tests directory:
+# cd tests && python -m pytest test_colorspace_nodes.py -v --rootdir=.
+# Or run directly with Python: cd tests && python test_colorspace_nodes.py
